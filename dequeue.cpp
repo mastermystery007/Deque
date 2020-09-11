@@ -13,6 +13,7 @@ class Deque
 	int front; 
 	int rear; 
 	int size; 
+
 public : 
 	Deque(int size,int defaultVal) 
 	{ 
@@ -52,15 +53,14 @@ public :
 void Deque::showElements()
 {
 	cout<<"\n";
-    cout<<"front is.."<<front<<"\n";
-    cout <<"rear is.."<<rear<<"\n";
+    cout<<"front is.."<<front<<"...and  ";
+    cout <<"rear is.."<<rear<<"....";
 	cout<<"\n";
     cout<<"size is.."<<size<<"\n";
-    if(rear!=-1){ int numOfElements = size-rear+front+1;
-	cout<<"num of elements"<<numOfElements<<"\n";}
-	else{cout<<"num of elements"<<front+1<<"\n";}
+  
    
-	if(rear!=-1 ){
+	if(rear!=-1 )
+	{
 		for(int i=rear;i<=size-1;i++)
 		{
 		cout<<arr[i]<<"; ";
@@ -70,14 +70,14 @@ void Deque::showElements()
 	
 	if(front!=-1)
 	{
-		for(int i=0;i<=front;i++){
-        
+		for(int i=0;i<=front;i++)
+		{
         cout<<arr[i]<<"; ";
-    }
+    	}
 	cout<<"....";
 	}
     	
-	
+	 cout<<"All elements done";
 	
 }
 
@@ -104,9 +104,9 @@ void Deque::insertfront(int key)
 
 	front++;
 	arr[front] = key ; 
-	cout << "front index  is "<<front << endl;
-	cout << "rear index  is "<<rear << endl;
-	cout << "value is "<<arr[front] << endl;
+	cout << "front index  is "<<front << "...";
+	cout << "rear index  is "<<rear << "...";
+	cout << "value at front is "<<arr[front] << endl;
 	cout<<"insert front finished.. ";
 
 } 
@@ -119,7 +119,7 @@ void Deque ::insertrear(int key)
 		resize(); 
 	} 
 	
-	else if (rear ==-1 && front!=size-1 ) {rear = size; }
+	if (rear ==-1 && front!=size-1 ) {rear = size; }
 	
 	rear = rear-1; 
 	
@@ -194,9 +194,13 @@ int Deque::popRear()
 } 
 
 int Deque::D(int index)
-{   
+{   int elements;
+	if(rear==-1 && front==-1){elements=0;}
+	else if(rear==-1){elements=front+1;}
+	else if(front==-1){elements=size-rear;}
+	else{elements=front+size-rear+1;}
   
-  if(index<size-rear+front+1)
+  if(index<elements)
   {		
 	  if(rear==-1 && front==-1)
 	  {	cout<<"the DQ is empty ";
@@ -208,12 +212,10 @@ int Deque::D(int index)
 		 
 		  	cout<<"the index is"<<index<<" and the element is"<<arr[front-index];
 			return arr[front-index];
-		  
-			  
-	  }
+            }
 	else if(front==-1)
-	{	cout<<"the index is"<<rear+index<<" and the element is"<<arr[size-index-1];
-		return arr[rear+index];
+	{	cout<<"the index is"<<size-index-1<<" and the element is"<<arr[size-index-1];
+		return arr[size-index-1];
 	}
 
 	else {
@@ -232,7 +234,7 @@ int Deque::D(int index)
 
 void Deque::resize(int newSize,int defaultValue)
 {   
-   int *temp=new int [newSize];
+    int *temp=new int [newSize];
 	cout<<"\n"; 
     cout<<"front is.."<<front<<"\n";
     cout <<"rear is.."<<rear<<"\n";
@@ -243,7 +245,7 @@ void Deque::resize(int newSize,int defaultValue)
 	else if(rear==-1){elements=front+1;}
 	else if(front==-1){elements=size-rear;}
 	else{elements=front+size-rear+1;}
-    if(newSize>elements)
+    if(newSize>=elements)
 	{
 		for(int i=0;i<newSize;i++)
 		{
@@ -283,15 +285,10 @@ void Deque::resize(int newSize,int defaultValue)
 	
     }
 	else if(newSize<elements)
-	{
-		if(front==-1 && rear ==-1)
-		{
-			for(int i=0;i<newSize;i++)
-		{
-			temp[i]=defaultValue;
-		}	
-		}
-		else if(front!=-1 && rear ==-1)
+	{cout<<"new size is less than elements";
+		
+		
+		if(front!=-1 && rear ==-1)
 		{
 			for(int i=0;i<front;i++)
 		{
@@ -313,17 +310,21 @@ void Deque::resize(int newSize,int defaultValue)
 		}
 		else
 		{
-		for(int i=0;i<front;i++)
-		{
-			if(i<newSize){temp[i]=arr[i];}
-		}
-		for(int i=1;i<=size-rear;i++)
+        for(int i=1;i<=size-rear;i++)
 		{	
-			if(i<newSize && newSize-i>front){temp[newSize-i]=arr[size-i];
+			if(i<newSize && newSize-i>front)
+            {
+            temp[newSize-i]=arr[size-i];
 			cout<<"index"<<size-i<<"->"<<newSize-i<<" ";
 			cout<<" ";
 			}
 		}
+
+        for(int i=0;i<=front;i++)
+		{
+			if(i<newSize){temp[i]=arr[i];cout<<front<<"..front"<<arr[i]<<"..value";}
+		}
+
 		}
 		
 		
@@ -333,20 +334,6 @@ void Deque::resize(int newSize,int defaultValue)
 	}
 
 
-	if(rear!=1 && rear<=size-1){
-		for(int i=rear;i<=size-1;i++)
-		{
-		cout<<arr[i]<<"; ";
-    	}
-		
-	}
-	
-	if(front!=-1)
-	{
-		for(int i=0;i<=front;i++){
-        
-        cout<<arr[i]<<"; ";}
-    }
 
 
 
@@ -365,7 +352,7 @@ void Deque::resize()
 			
 
 	
-		if(front>=0)
+		if(front!=-1)
 		{
     	for(int i=0;i<=(front);i++)
         {
@@ -375,9 +362,9 @@ void Deque::resize()
     	cout<<"..front.. "<<"\n";
     	}
 
-		if(rear>=0)
+		if(rear!=-1)
    		{   
-		cout<<"pushing from rear to new array"<<"\n"; 
+	    cout<<"pushing from rear to new array"<<"\n"; 
 	   for(int i=1;i<=size-rear;i++)
         {
 			temp[newS-i]=arr[size-i];
@@ -394,11 +381,8 @@ void Deque::resize()
 	
     
     
-	cout<<" front is  "<<front<<" rear is  "<<rear<<"\n";
+	cout<<" front is  "<<front<<"& rear is  "<<rear<<"\n";
 	cout<<" resizing complete"<<"\n";
-	
-
-
 }
 
 
@@ -406,20 +390,29 @@ int main()
 { 
 	Deque *dq = new Deque(); 
    
- 
-    dq->insertfront(3);
-	dq->insertfront(5);
-    
-	dq->insertrear(7);
-	dq->insertrear(19);
-	dq->insertrear(20);
-	dq->popFront();
 	dq->showElements();
-	cout<<"the fifth element is"<<dq->D(1);
-	dq->resize(10,99);
-	dq->showElements();
-	dq->popRear();
-	dq->showElements();
+    dq->insertfront(23);
+    dq->insertrear(89);
+    dq->showElements();
+    dq->resize(10,2);
+    dq->showElements();
+    dq->resize(5,0);
+    dq->showElements();
+    dq->popRear();
+    dq->showElements();
+    dq->resize(20,0);
+    dq->showElements();
+    dq->popRear();
+    dq->popRear();
+    dq->insertfront(786);
+    dq->insertrear(89);
+    dq->showElements();
+    dq->getFront();
+    cout<<"\n";
+    dq->D(18);
+
+
+
 
 	
 	return 0; 
