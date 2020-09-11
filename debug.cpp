@@ -179,7 +179,7 @@ void Dequeue :: resize(){
    
     
 
-    if(rear>0 && rear <=(size-1))
+    if(rear!=-1 && rear <=(size-1))
    {
         for(int i=1;i<=size-rear;i++)
         {
@@ -214,17 +214,17 @@ if(front!=-1)
     }
 
 
-    
+    cout<<"All elements done";
     
    
 }
 
 int main() 
 { 
-	Dequeue *dq = new Dequeue(3,1); 
+	Dequeue *dq = new Dequeue(); 
    
  
-    dq->resize(10,2);
+    dq->resize();
     dq->showElements();
 
 	
