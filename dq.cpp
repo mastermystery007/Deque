@@ -344,6 +344,7 @@ void Deque::resize(int newSize,int defaultValue)
 
 void Deque::resize()
 {
+	//when  we call this resize check for the rear pointer
 	int newS=size+20;
  	int *temp=new int [newS];
 	cout<<"\n"; 
@@ -377,9 +378,10 @@ void Deque::resize()
 		}
 
 	arr=temp;    
-	
+	if(rear==-1){rear=-1;}
+	else{rear=newS - size + rear;}
 
-	rear=newS - size + rear;
+	
     size=newS;
 	
     
@@ -392,7 +394,7 @@ void Deque::resize()
 int main() 
 { 
 	Deque *dq = new Deque(); 
-   
+    dq->resize();
 	dq->resize(5,3);
 	dq->showElements();
 
